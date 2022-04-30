@@ -15,3 +15,6 @@ on leftclick with iron sword:
 		
 		send "slash"
 		send "it works (:Penis in ur mom :) "
+on player armor changed:
+	if player is wearing iron boots with name "Speed Boots":
+		apply swiftness 2 to player for 3000 seconds
