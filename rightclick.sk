@@ -58,19 +58,20 @@ on right click with stick:
 	else if name of player's held item is "Telekinesis Wand":
 		make player execute command "teleStart 743957345"
 on right click with iron sword:
-	if name of player's held item is "Flame Sword":
+	set {_name} to name of player's held item
+	if {_name} is "Flame Sword":
 		make player execute command "flame 92873658"
-	if name of player's held item is "Undead Sword":
+	else if {_name} is "Undead Sword":
 		make player execute command "undead 289375"
-	else if name of player's held item is "Lightning Katana":
+	else if {_name} is "Lightning Katana":
 		make player execute command "chargeDash 4837856736"
-	else if name of player's held item is "Ice Katana":
+	else if {_name} is "Ice Katana":
 		make player execute command "frostExplosion 384634868"
-	else if name of player's held item is "Wind Katana":
+	else if {_name} is "Wind Katana":
 		make player execute command "tornado 38947693"
-	else if name of player's held item is "Flame Katana":
+	else if {_name} is "Flame Katana":
 		make player execute command "flameKatana 34563760386"
-	else if name of player's held item is "Earth Katana":
+	else if {_name} is "Earth Katana":
 		make player execute command "earth 279357293"
-	else if name of player's help item is "&4Dragon Sword":
+	else if {_name} is "&4Dragon Sword":
 		make player execute command "FireBallz 7467892467" 
