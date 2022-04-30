@@ -1,0 +1,9 @@
+every 0.5 seconds in "world":
+	loop all players:
+		add 0.5 to {healing.%loop-player%.noHurtTimer}
+		if {healing.%loop-player%.noHurtTimer} >= 5 || {regions.%loop-player%.location} is not "&2The Wild":
+			#send "healing" to "ShadowStar18" parsed as player
+			add 0.25 to loop-player's health
+		#else:
+			#send "%5 - {healing.%loop-player%.noHurtTimer}% Seconds to heal" to "ShadowStar18" parsed as player
+		

@@ -1,0 +1,119 @@
+command /tornado <text>:
+	cooldown: 1 seconds
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "38947693":
+			clear {_players::*}
+			loop all living entities in radius 15 around location of player:
+				if loop-entity is not player:
+					apply ambient levitation of tier 3 to loop-entity for 10 seconds
+					add loop-entity to {_players::*}
+			set {_loc} to location of player
+			set {_ticks} to 0
+			while {_ticks} <= 100:
+				play sound "entity.wither.shoot" with volume 0.3 and pitch random number between 0.4 and 0.9 at player for {_players::*} and player
+				wait 4 ticks
+				add 4 to {_ticks}
+				set {_wind} to 0
+				while {_wind} <= 150:
+					set {_height} to random integer from 2 to 25
+					show 5 sweep attack at {_loc} ~ vector((random integer from -3 to 3) * ({_height}/8), {_height}, (random integer from -3 to 3) * ({_height}/8))
+					add 1 to {_wind}
+				loop {_players::*}:
+					set {_v} to vector from loop-value to {_loc} ~ vector(random integer from -5 to 5, 15, random integer from -5 to 5) 
+					push loop-value {_v} at speed 2
+					set {rightclick.%player%.trueDamage} to true
+					make player damage loop-value by random number from 0 to 4
+					set {rightclick.%player%.trueDamage} to false
+command /frostExplosion <text>:
+	cooldown: 20 seconds
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "384634868":
+			set {_explosions} to 0
+			clear {_players::*}
+			loop all entities in radius 15 around location of player:
+				if loop-entity is not player:
+					apply ambient potion of slowness of tier 100 to loop-entity for 5 seconds
+					apply ambient blindness of tier 5 to loop-entity for 5 seconds
+				add loop-entity to {_players::*}
+			while {_explosions} <= 10:
+				show huge explosion at location of player ~ vector(random integer from -5 to 5, random integer from -5 to 5, random integer from -5 to 5)
+				add 1 to {_explosions}
+			play sound "block.end_portal.spawn" with volume 3 and pitch 0.8 at player for {_players::*} and player
+			drawRings particle "redstone", RGB 0, 0, 255, center location of player ~ vector(0, -5, 0), id "rightclick.%player%.ICE", rainbowMode false, randomRotation true, animated false, radius 15, ringCount 20, ringDensity 10, visibleRange 32, pulseDelay 0
+			loop all blocks in radius 15 around location of player:
+				if loop-block is not air or ice or water or fire:
+					if block at (location of loop-block ~ vector(0, 1, 0)) is air:
+						add loop-block to {_changed::*}
+						set {_changed.%loop-block%.pastBlock} to type of loop-block
+						set block at location of loop-block to ice block
+			set {_seconds} to 0
+			while {_seconds} <= 10:
+				play sound "block.beacon.ambient" with volume 10 and pitch 2 at player for all players
+				wait 1 second
+				add 1 to {_seconds}
+			loop {_changed::*}:
+				set block at loop-value to {_changed.%loop-value%.pastBlock}
+			stopEffect "rightclick.%player%.ICE"
+command /chargeDash <text>:
+	cooldown: 10 seconds
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "4837856736":
+			set {_loc} to player's location
+			set {damage.%player%.noDmg} to "true"
+			clear {_ids::*}
+			loop all living entities in radius 20 around location of player:
+				if loop-entity is not player:
+					set {_id} to "rightclick.%player%-%random integer from 1 to 100000%"
+					drawArc particle "redstone", RGB 255, 255, 0, center location of player ~ vector(0, 1, 0), target location of loop-entity ~ vector(0, 1, 0), id {_id}, rainbowMode false, density 25, height 0, pitchMultiplier 4, visibleRange 30
+					add {_id} to {_ids::*}
+					teleport player to loop-entity
+					make player damage loop-entity by 5
+				wait 1 tick
+			set {_id} to "rightclick.%player%-%random integer from 1 to 100000%"
+			drawArc particle "redstone", RGB 255, 255, 0, center location of player ~ vector(0, 1, 0), target {_loc} ~ vector(0, 1, 0), id {_id}, rainbowMode false, density 25, height 0, pitchMultiplier 4, visibleRange 30
+			add {_id} to {_ids::*}
+			teleport player to {_loc}
+			set {damage.%player%.noDmg} to "false"
+			wait 1 second
+			loop {_ids::*}:
+				stopEffect loop-value
+command /earth <text>:
+	cooldown: 15 seconds
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "279357293":
+			clear {_block::*}
+			set {_degrees} to 0
+			set {_scale} to 2
+			set {_damage} to 3
+			set {_startLoc} to location of player
+
+			loop 15 times:
+				loop 20 times:
+					set {_loc} to ({_startLoc} ~ vector(cos({_degrees}) * {_scale}, 0, sin({_degrees}) * {_scale}))
+					summon falling dirt 1 meters above {_loc} #3 meters infront and
+					add the last spawned entity to {_block::*}
+					add 20 to {_degrees}
+				loop {_block::*}:
+					push loop-value-2 upwards at speed 0.2
+					set no clip state of loop-value-2 to true
+					add loop-value-2 to {_blocks::*}
+				clear {_block::*}
+				add 1 to {_scale}
+				wait 0.3 seconds
+				loop 3 + loop-value/10 times:
+					set {_deg} to random integer from 0 to 360
+					set {_loc} to vector(cos({_deg}) * {_scale}, 0, sin({_deg}) * {_scale})
+					show huge explosion at {_startLoc} ~ {_loc}
+				play sound "entity.generic.explode" with volume 3 and pitch 0.8 at player for all players
+				loop all entities in radius {_scale} around {_startLoc}:
+					if loop-entity is not player:
+						if {_blocks::*} does not contain loop-entity:
+							if distance between loop-entity and {_startLoc} > {_scale} - 2:
+								damage loop-entity by 1 hearts
+								push loop-entity upwards with force 0.15
+								push loop-entity direction from {_startLoc} to location of loop-entity with force 0.7
+			wait 1 second

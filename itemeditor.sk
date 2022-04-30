@@ -1,0 +1,43 @@
+command /itemeditor <text> [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is "colors" or "colours":
+            send "&4&l&nColors Codes:"
+            send "&7&{&6Code&7} {TEXT}"
+            send "&60 - &0Black"
+            send "&61 - &1Dark Blue"
+            send "&62 - &2Dark Green"
+            send "&63 - &3Dark Aqua"
+            send "&64 - &4Dark Red"
+            send "&65 - &5Dark Purple"
+            send "&66 - &6Gold"
+            send "&67 - &7Gray"
+            send "&68 - &8Dark Gray"
+            send "&69 - &9Blue"
+            send "&6a - &aGreen"
+            send "&6b - &bAqua"
+            send "&6c - &cRed"
+            send "&6d - &dLight Purple"
+            send "&6e - &eYellow"
+            send "&6f - &fWhite"
+        if arg-1 is "style":
+            send "&4&l&nStyle Codes:"
+            send "&7&{&6Code&7} {TEXT}"
+            send "&6k &7- &kurmumgay"
+            send "&6l &7- &lBold"
+            send "&6m &7- &mStrikeThrough"
+            send "&6n &7- &nUnderline"
+            send "&6o &7- &oItalic"
+            send "&6r &7- &rReset"
+        if arg-1 is "name":
+            set name of player's held item to colored arg-2
+        if arg-1 is "lore":
+            set lore of player's held item to colored arg-2
+        if arg-1 is "clearench":
+            disenchant the player's tool
+        # if arg-1 is "Vampire Blade":
+        #     Give player 1 diamond sword named "&4Vampire Blade" with lore "" and "" and "&5MYTHIC" and "" and "&7ability:" and "&fSteals 30%% of damage to enemies" and "" and "&7unbreakable"
+        # if arg-1 is "examplesword":
+        #     Give player 1 diamond sword named "&6Sword Of Fire Breathing" with lore "" and "" and "&6Epic" and "" and "&7ability:" and "&fShoots fireballs on right click" and "" and "&7unbreakable"
+        # if arg-1 is "flame_book":
+        #     Give player 1 knowledge book named "&4Flame Book" with lore "" and "" and "&6Epic Item" and "" and "&7Ability:" and "&fSummons Fire Balls" and "" and "&7unbreakable"

@@ -1,0 +1,14 @@
+On join:
+	if {coins.%player%.coins} is not set:
+		set {coins.%player%.coins} to 0
+		send "start coins"
+
+#coin tools
+command /giveCoins <player> <int>:
+	permission: op
+	trigger:
+		add arg-2 to {coins.%arg-1%.coins}
+command /setCoins <player> <int>:
+	permission: op
+	trigger:
+		set {coins.%arg-1%.coins} to arg-2

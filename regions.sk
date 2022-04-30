@@ -1,0 +1,60 @@
+every 10 ticks in "world":
+	loop all players:
+		if {damage.%loop-player%.comboTimer} is not set:
+			set {damage.%loop-player%.comboTimer} to 0
+		else if {damage.%loop-player%.comboTimer} > 0.0:
+			add -1 * 10/tps from the last 1 minute to {damage.%loop-player%.comboTimer}
+		else:
+			set {damage.%loop-player%.combo} to 0
+			set {damage.%loop-player%.comboTimer} to 0
+		#send "Combo: %{damage.%loop-player%.combo}%, Timer: %{damage.%loop-player%.comboTimer}%" to loop-player
+
+		if loop-player is standing in water:
+			if gamemode of loop-player is not creative:
+				if {regions.%loop-player%.location} is "&2The Wild":
+					teleport loop-player to {regions.%loop-player%.pastLocation}
+					play sound "block.anvil.land" with volume 1 and pitch 1 at loop-player for loop-player
+		if the distance between loop-player and location(476, 72, -563) < 52:
+			if {regions.%loop-player%.location} is not "Graveyard":
+				send action bar "Graveyard" to loop-player
+				set {regions.%loop-player%.location} to "Graveyard"
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+		else if the distance between loop-player and location(204, 96, -38) < 40:
+			if {regions.%loop-player%.location} is not "&6Outlaw Camp":
+				send action bar "&6&lOutlaw Forest Camp!" to loop-player
+				set {regions.%loop-player%.location} to "&6Outlaw Camp"
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+		else if the distance between loop-player and location(-22, 87, -130) < 40:
+			if {regions.%loop-player%.location} is not "&fSpawn":
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+				send action bar "&f&lSpawn" to loop-player
+				set {regions.%loop-player%.location} to "&fSpawn"
+		else if the distance between loop-player and location(-333, 92, 91) < 70:
+			if {regions.%loop-player%.location} is not "&4&lEscavear's Castle":
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+				send action bar "&4&lEscavear's Castle" to loop-player
+				set {regions.%loop-player%.location} to "&4&lEscavear's Castle"
+		else if the distance between the loop-player and location(-133, 78, 258) < 40:
+			if {regions.%loop-player%.location} is not "&e&lCheesesteak's House":
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+				send action bar "&e&lCheesesteak's House" to loop-player
+				set {regions.%loop-player%.location} to "&e&lCheesesteak's House"
+		else:
+			if {regions.%loop-player%.location} is not "&2The Wild":
+				play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at loop-player for loop-player
+				send action bar "&2&lThe Wild" to loop-player
+				set {regions.%loop-player%.pastLocation} to location of loop-player
+				set {regions.%loop-player%.location} to "&2The Wild"
+		#if {regions.%loop-player%.location} is not "&2The Wild":
+		#	execute command "resetMobs %loop-player%"
+
+#command /rg <text> <int> <text> <int> <mob>:      #[add,delete,replace,list],size, name, max mobs, mob
+	#permission: op
+	#trigger:
+		#if arg-1 is "add":
+			#if {locations::*} does not contain arg-3:
+				#send "adding..." to player
+			#else:
+				#send "location name is already taken" to player
+				#stop
+		

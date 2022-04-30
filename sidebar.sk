@@ -1,0 +1,38 @@
+on join:
+	set {damage.%player%.noDmg} to false
+	#if {gui.%player%.damage} is not set:
+		#set {gui.%player%.damage} to 10
+	while player is online:
+		set title of player's scoreboard to "Modded918"
+		if size of all players is 1:
+			set line 15 of player's scoreboard to "Just You Online (:"
+		else:
+			set line 15 of player's scoreboard to "%size of all players% Players Online "
+		set line 14 of player's scoreboard to "----------------"
+		set line 13 of player's scoreboard to "&2&lBalance:"
+		set line 12 of player's scoreboard to "&a$%{coins.%player%.coins}%"
+		set line 11 of player's scoreboard to "----------------"
+		set line 10 of player's scoreboard to "&6&lLocation:"
+		set line 9 of player's scoreboard to "%{regions.%player%.location}%"
+		set line 8 of player's scoreboard to "----------------"
+		set line 7 of player's scoreboard to "&4&lPvP:"
+		if "%{regions.%player%.location}%" is "&2The Wild":
+			set line 6 of player's scoreboard to "&4On"
+		else:
+			set line 6 of player's scoreboard to "&2Off"
+		set line 5 of player's scoreboard to "----------------"
+		if tps from the last 1 minute > 18:
+			set line 1 of player's scoreboard to "&aTps: %tps from the last 1 minute%"
+		else if tps from the last 1 minute <18:
+			if tps from the last 1 minute > 10:
+				set line 1 of player's scoreboard to "&aTps: &e%tps from the last 1 minute%"
+			else:
+				set line 1 of player's scoreboard to "&aTps: &4%tps from the last 1 minute%"
+		if player's ping <= 60:
+			set line 2 of player's scoreboard to "&aPing: %player's ping%"
+		else if player's ping > 60:
+			if player's ping < 80:
+				set line 2 of player's scoreboard to "&aPing: &e%player's ping%"
+			else:
+				set line 2 of player's scoreboard to "&aPing: &4%player's ping%"
+		wait 10 ticks

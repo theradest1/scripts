@@ -1,0 +1,68 @@
+#right click effects -------------------------------------------------------
+command /lightning <text>:
+	cooldown: 15 seconds
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "93658957":
+			set {_strikes} to 0
+			while {_strikes} is not 10:
+				wait 2 ticks
+				strike lightning effect at player
+				add 1 to {_strikes}
+			loop 2 times:
+				wait 0.5 seconds
+				loop all entities in radius 10 around location of player:
+					if loop-entity is not player:
+						strike lightning effect at loop-entity
+						make player damage loop-entity by 5
+
+command /flame <text>:
+	cooldown: 15 seconds
+	cooldown message: &4Wait %remaining time% before using this attack again.
+	trigger:
+		if arg-1 is "92873658":
+			loop all entities in radius 10 around location of player:
+				if loop-entity is not player:
+					set loop-entity on fire for 10 seconds
+command /undead <text>:
+	cooldown: 60 seconds
+	cooldown message: &4Wait %remaining time% before using this attack again.
+	trigger:
+		if arg-1 is "289375":
+			set {_summoned} to 0
+			while {_summoned} < 11:
+				summon zombie at player's location ~ vector(random number between -5 and 5, 0 , random number between -5 and 5)
+				set name of last spawned entity to "&4&lMinion of rightclick.%player%"
+				add 1 to {_summoned}
+
+
+
+#triggers -------------------------------------------------------
+on right click with stick:
+	if name of stick is "Explosion Wand":
+		make player execute command "wither 74289572"
+on right click with iron axe:
+	if name of player's held item is "Thor's Axe":
+		make player execute command "lightning 93658957"
+on right click with stick:
+	if name of player's held item is "Time Staff":
+		make player execute command "timechange 9346598734"
+	else if name of player's held item is "Kinetic Wand":
+		make player execute command "kinetic 04673094"
+	else if name of player's held item is "Telekinesis Wand":
+		make player execute command "teleStart 743957345"
+on right click with iron sword:
+	if name of player's held item is "Flame Sword":
+		make player execute command "flame 92873658"
+	if name of player's held item is "Undead Sword":
+		make player execute command "undead 289375"
+	else if name of player's held item is "Lightning Katana":
+		make player execute command "chargeDash 4837856736"
+	else if name of player's held item is "Ice Katana":
+		make player execute command "frostExplosion 384634868"
+	else if name of player's held item is "Wind Katana":
+		make player execute command "tornado 38947693"
+	else if name of player's held item is "Flame Katana":
+		make player execute command "flameKatana 34563760386"
+	else if name of player's held item is "Earth Katana":
+		make player execute command "earth 279357293"

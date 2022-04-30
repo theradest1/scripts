@@ -1,0 +1,101 @@
+variables:
+	{frame} = gray stained glass pane
+
+
+#auction house op tools
+command /sell <int>:
+	permission: op
+	permission message: "&4You can't do this yet... but soon :D"
+	trigger:
+		add player's held item to {ah.itemsForSale::*}
+		add player to {ah.seller::*}
+		add arg-1 to {ah.prices::*}
+		send "%player's held item% is on the auction house for %arg-1% coins" to player
+		remove player's held item from player
+command /buylist:
+	permission: op
+	permission message: "&4You can't do this... yet :D"
+	trigger:	
+		send "&lList of items for sale: "
+		set {_item} to 1
+		loop {ah.itemsForSale::*}:
+			send "&l%loop-value% &rselling for &l%{ah.prices::%{_item}%}%" to player
+			add 1 to {_item}
+		loop {ah.prices::*}:
+			send "%loop-value%"
+command /reset_ah: 
+	permission: op
+	permission message: "&4bruh stop"
+	trigger:
+		create a gui with virtual chest inventory with 1 row named "&4&lARE YOU SURE":
+			make gui 1 with green wool named "&2&lYES":
+				clear {ah.itemsForSale::*} 
+				clear {ah.prices::*}
+				clear {ah.seller::*}
+				send "Auction house has been reset" to player
+				close player's inventory
+			make gui 7 with red wool named "&4&lCANCEL":
+				close player's inventory
+				send "Canceled" to player
+		open last gui for player
+
+#auction house (problems)
+command /ah:
+	permission: op
+	permission message: "&4You can't do this yet... but soon :D"
+	trigger:
+		create a gui with virtual chest inventory with 1 row named "&6&lAuction House":
+			make gui 1 with green wool named "&a&lBrowse":
+				close player's inventory
+				make player execute command "/auctionHouse browse"
+			make gui 7 with red wool named "&4&lExit":
+				close player's inventory
+		open last gui for player
+command /auctionHouse <text>:
+	permission: op
+	permission message: "&4You can't do this yet... but soon :D"
+	trigger:
+		if arg-1 is "sell":
+			create a gui with virtual chest inventory with 4 rows named "&6&lAuction House - Sell":
+				make gui 8 with arrow named "&a&lUse &6/sell &7{price} &aTo sell the item you are holding"
+				make gui 31 with arrow named "&4&lExit":
+					make player execute command "/ah"
+		if arg-1 is "browse":
+			create a gui with virtual chest inventory with 6 rows named "&6&lAuction House - Browse":
+				set {_slot} to 10
+				set {_item} to 1
+				loop {ah.itemsForSale::*}:
+					make gui {_slot} with loop-value with lore "&a$%{ah.prices::%{_item}%}%":
+						close player's inventory
+						make player execute command "/buy %{_item}%"
+					add 1 to {_slot}
+					add 1 to {_item}
+				make gui 49 with arrow named "&4&lBack":
+					make player execute command "/ah"
+			open last gui for player
+
+command /buy <int>:
+	permission: op
+	permission message: "&4You can't do this yet... but soon :D"
+	trigger:
+		set {_place} to arg-1
+		set {ah.price} to {ah.prices::%{_place}%}
+		create a gui with virtual chest inventory with 4 rows named "&6&lAuction House - Buy":
+			make gui 25 with arrow named "&4&lCancel":
+				make player execute command "/auctionHouse browse"
+			make gui 10 with arrow named "&2Seller:" with lore "&6%{ah.seller::%{_place}%}%"
+			make gui 13 with {ah.itemsForSale::%{_place}%}
+			make gui 16 with arrow named "&a&lBuy" with lore "&6$%{ah.prices::%{_place}%}%":
+				if {coins.%player%.coins} >= {ah.prices::%{_place}%}:
+					give player {ah.itemsForSale::%{_place}%}
+					send "&2You bought &6%{ah.itemsForSale::%{_place}%}% &2from &6%{ah.seller::%{_place}%}% &2for &a$%{ah.prices::%{_place}%}%" to player
+					close player's inventory
+					add {ah.prices::%{_place}%} to {coins.%{seller::%{_place}%}%.coins}
+					subtract {ah.prices::%{_place}%} from {coins.%player%.coins}
+					send "&2You got &a$%{ah.prices::%{_place}%}% &2from selling &6%{ah.itemsForSale::%{_place}%}% &2to &6%player%" to {ah.seller::%{_place}%}
+					delete {ah.itemsForSale::%{_place}%}
+					delete {ah.prices::%{_place}%}
+					delete {ah.seller::%{_place}%}
+				else:
+					send "&4You need &2%{ah.price} - {coins.%player%.coins}% &4more coins to buy this item"
+		open last gui for player

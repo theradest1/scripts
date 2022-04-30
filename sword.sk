@@ -1,0 +1,9 @@
+on entity target:
+	if name of entity is set:
+		loop all living entities in radius 20 around location of entity:
+			if loop-entity is not an armor stand:
+				if loop-entity is not a villager:
+					if name of entity is not name of loop-entity or "&4&lMinion of sword.%loop-entity%":
+						set target entity to loop-entity
+						stop
+		cancel event

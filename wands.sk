@@ -1,0 +1,51 @@
+command /timechange <text>:
+	cooldown: 20 seconds
+	cooldown message: &4Wait %remaining time% before using this attack again.
+	trigger:
+		if arg-1 is "9346598734":
+			apply ambient potion of swiftness of tier 4 to player for 30 seconds
+			loop all entities in radius 20 around location of player:
+				if loop-entity is not player:
+					apply ambient potion of slowness of tier 2 to loop-entity for 30 seconds
+command /kinetic <text>:
+	cooldown: 30 seconds
+	cooldown message: &4Wait %remaining time% before using this attack again.
+	trigger:
+		if arg-1 is "04673094":
+			loop all entities in radius 10 around location of player:
+				if loop-entity is not player:
+					push loop-entity upwards at speed 1.2
+command /wither <text>:
+	cooldown: 1 second
+	cooldown message: &4Wait %remaining time% seconds before using this attack again.
+	trigger:
+		if arg-1 is "74289572":
+			shoot wither skull at speed 2
+			play sound "entity.wither.shoot" with volume 0.5 to player
+command /teleStart <text>:
+	cooldown: 1 seconds
+	cooldown message: &4Wait %remaining time% before using this attack again.
+	trigger:
+		if arg-1 is "743957345":
+			set {_shot} to 0
+			while {_shot} < 10:
+				make player execute command "telekinesis 95945878"
+				add 1 to {_shot}
+				wait 10 ticks
+				send action bar "&4&l%10 - {_shot}%/10" to player
+				play sound "entity.experience_orb.pickup" at volume 0.6 at pitch 0.8 + {_shot}/30 to player
+			play sound "block.anvil.land" at volume 1 at pitch 1 to player
+command /telekinesis <text>:
+	trigger:
+		if arg-1 is "95945878":
+			loop all living entities in radius 30 around location of player:
+				if distance between player and {_nearest} > distance between loop-entity and player:
+					if loop-entity is not player:
+						set {_nearest} to loop-entity
+				else if {_nearest} is not set:
+					if loop-entity is not player:
+						set {_nearest} to loop-entity
+			if {_nearest} is set:
+				set {_v} to vector from player to {_nearest} ~ vector(0, -1, 0)
+				shoot arrow at speed 4 {_v}
+				add 1 to {_shot}

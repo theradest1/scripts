@@ -1,0 +1,31 @@
+command /keys:
+	trigger:
+		if {bp.%{player}%.keys::*} is not set: #makes sure that the variable holding the keys is there (and sets all keys to 0 if not there)
+			loop 8 times:
+				add 0 to {bp.%{player}%.keys::*}
+
+		create a gui with virtual chest inventory with 5 rows named "&4&kI&a&kI&b&kI&f&l%player%'s &4&lK&6&le&1&ly&7&lBackpack&b&kI&a&kI&4&kI":
+			set {_slot} to 0
+			loop 45 times:
+				make gui slot {_slot} with black stained glass pane named "&7" #sets all slots to glass
+				add 1 to {_slot}
+			
+			#keys
+			make gui slot 10 with tripwire hook named "&6&lDaily &7Key" with lore "%{bp.%player%::0}% &6&lDaily" and "Click to pull out"
+			set {_a} to 11
+			make gui slot 13 with repeater named "&b&lDiamond &7Key" with lore "%{bp.%player%::1}% &b&lDiamond" and "Click to pull out"
+			set {_a} to 14
+			make gui slot 16 with comparator named "&a&lEmerald &7Key" with lore "%{bp.%player%::2}% &a&lEmerald" and "Click to pull out"
+			set {_a} to 17
+			make gui slot 21 with sunflower named "&d&lEpic &7Key" with lore "%{bp.%player%::3}% &d&lEpic" and "Click to pull out"
+			set {_a} to 23
+			make gui slot 23 with nether star named "&6&lLegendary &7Key" with lore "%{bp.%player%::4}% &6&lLegendary" and "Click to pull out"
+			set {_a} to 24
+			make gui slot 28 with powered rail named "&7&lCommon &7Key" with lore "%{bp.%player%::5}% &7&lCommon" and "Click to pull out"
+			set {_a} to 29
+			make gui slot 31 with detector rail named "&a&lUncommon &7Key" with lore "%{bp.%player%::6}% &a&lUncommon" and "Click to pull out"
+			set {_a} to 32
+			make gui slot 34 with activator rail named "&1&lRare &7Key" with lore "%{bp.%player%::7}% &1&lRare" and "Click to pull out"
+		open last gui for player
+
+

@@ -1,0 +1,145 @@
+command /setdamage <player> <int>:
+	permission: op
+	trigger:
+		set {gui.%arg-1%.damage} to arg-2
+
+#on damage effects -------------------------------------------------------
+on damage:
+	if {damage.%victim%.noDmg} is "true":
+		cancel event
+		stop
+	if victim is not a player:
+		if gamemode of attacker is not adventure:
+			if victim is a villager:
+				cancel event
+				stop
+			if victim is a pig:
+				if name of victim is "&8Grumm":
+					cancel event
+					stop
+			if victim is a horse:
+				cancel event
+				stop
+	else:
+		if {regions.%victim%.location} is not "&2The Wild":
+			cancel event
+			stop
+		set {damage.%victim%.comboTimer} to 0
+		set {damage.%victim%.combo} to 0
+
+		set {healing.%victim%.noHurtTimer} to 0
+
+	if attacker is a player:
+		if victim is a player:
+			if {regions.%victim%.location} is not "&2The Wild":
+				if gamemode of attacker is survival:
+					cancel event 
+					stop
+		if name of victim is "&4&lMinion of sword.%attacker%":
+			cancel event
+			stop
+		if victim is a player:
+			if gamemode of attacker is not gamemode of victim:
+				cancel event	
+				stop
+	if {sword.%attacker%.trueDamage} is true:
+		stop
+	
+	
+	if name of attacker's held item is "Undead Sword":
+		set damage to 7
+		apply ambient wither of tier 5 to victim for 5 seconds
+	if name of attacker's held item is "Lightning Katana":
+		set damage to 6
+		set {_v} to vector from attacker to victim
+		push attacker {_v} at speed 1
+	if name of attacker's held item is "Wind Katana":
+		set damage to 6
+	if name of attacker's held item is "Ice Katana":
+		set damage to 6
+		apply ambient slowness of tier 1 to victim for 10 seconds
+		apply ambient weakness of tier 1 to victim for 10 seconds
+	if name of attacker's held item is "Earth Katana":
+		set damage to 6
+	if name of attacker's held item is "Flame Katana":
+		set damage to 6
+	if name of attacker's held item is "Royal Blade":
+		Set damage to 2
+	if name of attacker's held item is "Telekinesis Wand":
+		set damage to 3
+		apply ambient levitation of tier 1 to victim for 1 seconds
+	if name of attacker's held item is "Explosion Wand":
+		set damage to 4
+	Else if name of attacker's held item is "Thor's Axe":
+		strike lightning effect at victim
+		Set damage to 8
+	else if name of attacker's held item is "Time Staff":
+		set damage to 5
+		apply ambient potion of swiftness of tier 2 to attacker for 5 seconds
+		apply ambient potion of slowness of tier 1 to victim for 5 seconds
+	else if name of attacker's held item is "Kinetic Wand":
+		set damage to 2
+		push victim upwards at speed 1
+		push victim in direction of attacker at speed 1
+	else if name of attacker's held item is "Flame Sword":
+		set victim on fire for 5 seconds
+	else if name of attacker's held item is "The Wombo Combo":
+		add 1 to {damage.%attacker%.combo}
+		set {damage.%attacker%.comboTimer} to 3
+		set damage to 0.1 * 2^ {damage.%attacker%.combo}
+		send action bar "&4&l%{damage.%attacker%.combo}% &4Hits!" to attacker
+		play sound "entity.experience_orb.pickup" at volume 1 at pitch 1 + {damage.%attacker%.combo}/10 to attacker
+	else if name of attacker's held item is "Boring Sword":
+		set damage to 3
+		if random integer between 1 and 100 is 3:
+			set damage to 300
+			send "&0&lS&1&lU&2&lP&3&lE&4&lR &5&lD&6&lA&7&lM&8&lA&9&lG&a&lE" to attacker
+	else if name of attacker's held item is "Strange Sword":
+		set damage to 2
+		set {_effect} to random integer between 1 and 6
+		if {_effect} is 1:
+			apply ambient wither of tier 2 to victim for 5 seconds
+			send "&lwither effect attack!" to attacker
+		if {_effect} is 2:
+			apply ambient potion of slowness of tier 3 to victim for 5 seconds
+			send "&lslowness attack!" to attacker
+		if {_effect} is 3:
+			set victim on fire for 5 seconds
+			send "&lfire attack!" to attacker
+		if {_effect} is 4:
+			apply ambient potion of weakness of tier 1 to victim for 5 seconds
+			send "&lweakness attack!" to attacker
+		if {_effect} is 5:
+			apply ambient potion of poison of tier 1 to victim for 5 seconds
+			send "&lpoison attack!" to attacker
+		if {_effect} is 6:
+			apply ambient hunger of tier 2 to victim for 5 seconds
+			send "&lhunger attack!" to attacker
+	#if attacker is a player:
+	#	set damage to damage * 0.1 * {sword.%attacker%.damage}
+	#set {damage.%victim%.combo} to 0
+	#more combo stuff is in the beginning of regions for the loop-all every few ticks
+	if victim is an armor stand:
+		#if name of victim is "Practice Dummy":
+		if gamemode of attacker is survival:
+			damageIndicator(victim, {_shownDamage} + final damage)
+			cancel event
+			stop
+		else:
+			kill victim
+	if final damage >= health of victim:
+		loop all players:
+			if {mobs.enemy.%{loop-value}%::*} contains victim:
+				remove victim from {mobs.enemy.%{loop-value}%::*}
+	# spawn area effect cloud at victim's location# with nbt "{NoGravity:1b}"#'s location ++ vector(0, 1, 0)      with nbt "{Radius:0.001f,Duration:50,Particle:""block air""}"
+	# add  "{Radius:0.001f,Duration:50,Particle:""block air""}" to nbt of last spawned entity
+	# set display name of last spawned entity to "&c%{_shownDamage} + final damage%"
+	damageIndicator(victim, {_shownDamage} + final damage)
+
+
+function damageIndicator(E: entity, damage: number):
+	spawn area effect cloud at position of {_E}
+	add  "{Radius:0.001f,Duration:50,Particle:""block air""}" to nbt of last spawned entity
+	set display name of last spawned entity to "&c%{_damage}%"
+
+    

@@ -1,0 +1,121 @@
+command /heal:
+	permission: op
+	trigger:
+		set health of player to max health of player
+		set hunger of player to 10
+command /spawn:
+	trigger:
+		send "&lTeleporting..." to player
+		wait 30 ticks
+		teleport player to location -28, 81, -131 in world "world"
+command /stopAllEffects:
+	permission: op
+	trigger:
+		loop all id names:
+			stopEffect loop-value
+command /practiceDummy:
+	permission: op
+	trigger:
+		summon armor stand at location of player
+		set display name of last spawned entity to "Practice Dummy"
+command /make <player> <text>:
+	permission: op
+	trigger:
+		make arg-1 execute command arg-2
+command /special_item <text> [<text>]:
+    permission: op
+    trigger:
+        if arg-1 is "wand":
+            Give player 1 stick named arg-2
+        else if arg-1 is "sword" or "katana":
+            Give player 1 iron sword named arg-2
+        else if arg-1 is "axe":
+            Give player 1 iron axe named arg-2
+
+on tab complete of "/special_item":
+	set tab completions for position 1 to "wand", "sword", "axe", "katana"
+	if tab arg-1 is "wand":
+		set tab completions for position 2 to "Telekinesis Wand", "Explosion Wand", "Time Staff", "Kinetic Wand"
+	if tab arg-1 is "sword":
+		set tab completions for position 2 to "Undead Sword", "Lightning Katana", "Wind Katana", "Ice Katana", "Royal Blade", "Flame Sword", "The Wombo Combo", "Boring Sword", "Strange Sword", "Earth Katana"
+	if tab arg-1 is "axe":
+		set tab completions for position 2 to "Thor's Axe"
+	if tab arg-1 is "katana":
+		set tab completions for position 2 to "Lightning Katana", "Wind Katana", "Ice Katana", "Earth Katana"
+
+
+
+#stopping crafting and shopkeeper griefing
+on hunger bar change:
+	cancel event
+on right click on villager:
+	if entity's name is "&6&lAuction House Keeper":
+		make player execute command "/ah"
+		cancel event
+on right click on crafting table:
+	cancel event
+on right click on horse:
+	cancel event
+on right click on anvil:
+	cancel event
+on pickup arrow:
+	cancel event
+on place:
+	if gamemode of player is not creative:
+		cancel event
+on right click on item frame:
+	if gamemode of player is not creative:
+		cancel event
+on break:
+	if gamemode of player is not creative:
+		cancel event
+on right click with written book:
+	cancel event
+	send "&4This event has been canceled because people can be malicious and force you to do op commands EX: /op %%player%%. (Ban or warn whoever gave it to you)"
+on right click on white bed:
+	cancel event
+on right click on chest:
+	if gamemode of player is not adventure:
+		cancel event
+on death of player:
+	set {commands.%entity%.coins} to {commands.%entity%.coins} / 2
+	force player to respawn
+	wait 1 tick
+	teleport victim to location -28, 81, -131 in world "world"
+	send "&4You Died and lost &a$%{commands.%entity%.coins}%"
+on projectile hit:
+    event-projectile is arrow
+    delete event-projectile
+on fade:
+	cancel event
+on item damage:
+	cancel event
+on combust:
+	cancel event
+	stop
+#on block change:
+#	cancel event
+#	stop
+#on drop:
+#	cancel event
+#	stop
+on block damaging:
+	cancel event
+	stop
+
+
+
+
+every 5 seconds in "world":
+	strike lightning effect at location(-363, 210, -64)
+	loop all players:
+		stopEffect "%loop-player%"
+		if loop-player's held item is an iron sword:
+			if name of loop-player's held item is "Lighting Katana":
+				drawComplexCircle particle "redstone", RGB 255, 255, 0, center loop-player, id "%loop-player%", rainbowMode false, randomRotation true, radius 1.5, density 100, start 0, visibleRange 30
+			else if name of loop-player's held item is "Ice Katana":
+				drawComplexCircle particle "redstone", RGB 0, 0, 255, center loop-player, id "%loop-player%", rainbowMode false, randomRotation true, radius 1.5, density 100, start 0, visibleRange 30
+			else if name of loop-player's held item is "Wind Katana":
+				drawComplexCircle particle "sweep", speed 5, center loop-player, id "%loop-player%", rainbowMode false, randomRotation true, radius 5, density 5, start 0, visibleRange 30
+			else if name of loop-player's held item is "Flame Katana":
+				drawComplexCircle particle "redstone", RGB 255, 80, 0, center loop-player, id "%loop-player%", rainbowMode false, randomRotation true, radius 1.5, density 100, start 0, visibleRange 30
