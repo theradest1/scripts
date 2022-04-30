@@ -39,6 +39,7 @@ command /FireBallz <text>:
 	trigger:
 		if arg-1 is "7467892467":
 			send "Your mom L bozo, no dad, no life, no bitches, loser"
+				shoot fireball at speed 3
 		
 
 
