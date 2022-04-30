@@ -34,7 +34,12 @@ command /undead <text>:
 				summon zombie at player's location ~ vector(random number between -5 and 5, 0 , random number between -5 and 5)
 				set name of last spawned entity to "&4&lMinion of rightclick.%player%"
 				add 1 to {_summoned}
-
+command /FireBallz <text>:
+	cooldown: 1 seconds
+	trigger:
+		if arg-1 is "7467892467":
+			send "Your mom L bozo, no dad, no life, no bitches, loser"
+		
 
 
 #triggers -------------------------------------------------------
@@ -66,3 +71,5 @@ on right click with iron sword:
 		make player execute command "flameKatana 34563760386"
 	else if name of player's held item is "Earth Katana":
 		make player execute command "earth 279357293"
+	else if name of player's help item is "&4Dragon Sword":
+		make player execute command "FireBallz 7467892467" 
