@@ -11,10 +11,11 @@ command /flameKatana <text>:
 
 on leftclick with iron sword:
 	if name of player's held item is "Flame Katana" && {katanas.player.fireSlash} is true:
-		drawCircle particle "redstone", center player, id "hihi", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30
+		drawCircle particle "redstone", center player, id "%player%coolparticle", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30
 		
 		send "slash"
 		send "it works (:Penis in ur mom :) "
+
 on player armor changed:
 	if player is wearing iron boots with name "Speed Boots":
 		apply swiftness 2 to player for 3000 seconds
