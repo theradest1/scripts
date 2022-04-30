@@ -21,7 +21,7 @@ on player armor changed:
 
 On player armor changed:
 	if player is wearing iron helmet with name "Thor's Helmet":
-		apply resistance 4 to player for 999 days
+		apply resistance 5 to player for 999 days
 
 	
 
