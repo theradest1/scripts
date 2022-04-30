@@ -14,4 +14,4 @@ on leftclick with iron sword:
 		drawCircle particle "redstone", center player, id "hihi", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30
 		
 		send "slash"
-		send "it works (:Penis in my ballz :) "
+		send "it works (:Penis in ur mom :) "
