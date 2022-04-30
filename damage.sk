@@ -117,7 +117,7 @@ on damage:
 			send "&lhunger attack!" to attacker
 	if victim is wearing iron chestplate named "Thor's Chestplate" && attacker is entity:
 		loop all entities in radius 10 around location of victim:
-			make victim damage loop-entity 
+			damage loop-entity by 1 heart
 		send "hi" to victim 
 	
 	
