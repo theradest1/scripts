@@ -34,12 +34,16 @@ command /undead <text>:
 				summon zombie at player's location ~ vector(random number between -5 and 5, 0 , random number between -5 and 5)
 				set name of last spawned entity to "&4&lMinion of rightclick.%player%"
 				add 1 to {_summoned}
+
 command /FireBallz <text>:
 	cooldown: 1 seconds
 	trigger:
 		if arg-1 is "7467892467":
 			send "Your mom L bozo, no dad, no life, no bitches, loser"
-			shoot dragon fireball at speed 3
+			show huge explosion at targeted block
+			loop all entities in radius 5 of targeted block's location:
+				if loop-entity is not player:
+					damage loop-entity by 2 hearts
 		
 
 
