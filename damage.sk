@@ -115,6 +115,10 @@ on damage:
 		if {_effect} is 6:
 			apply ambient hunger of tier 2 to victim for 5 seconds
 			send "&lhunger attack!" to attacker
+	if victim is wearing iron chestplate named "Thor's Chestplate":
+		send "hi" to victim 
+	
+	
 	#if attacker is a player:
 	#	set damage to damage * 0.1 * {sword.%attacker%.damage}
 	#set {damage.%victim%.combo} to 0
