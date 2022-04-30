@@ -21,8 +21,12 @@ on player armor changed:
 On player armor changed:
 	if player is wearing iron boots with name "Speed Boots":
 		apply swiftness 2 to player for 999 days
+	else:
+		remove swiftness from player
 	if player is wearing iron helmet with name "Thor's Helmet":
 		set the maximum health of the player to 100
+	else:
+		set maximum health player to 10
 			
 
 	
