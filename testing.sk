@@ -15,13 +15,15 @@ on leftclick with iron sword:
 		send "slash"
 		send "it works (:Penis in ur mom :) "
 on player armor changed:
-	if player is wearing iron boots with name "Speed Boots":
-		apply swiftness 2 to player for 999 days
+	
 
 
 On player armor changed:
+	if player is wearing iron boots with name "Speed Boots":
+		apply swiftness 2 to player for 999 days
 	if player is wearing iron helmet with name "Thor's Helmet":
-		apply resistance 5 to player for 998 days
+		set the maximum health of the player to 100
+			
 
 	
 
