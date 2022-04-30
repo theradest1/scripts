@@ -115,7 +115,7 @@ on damage:
 		if {_effect} is 6:
 			apply ambient hunger of tier 2 to victim for 5 seconds
 			send "&lhunger attack!" to attacker
-	if victim is wearing iron chestplate named "Thor's Chestplate":
+	if victim is wearing iron chestplate named "Thor's Chestplate" && attacker is entity:
 		send "hi" to victim 
 	
 	
