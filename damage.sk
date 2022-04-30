@@ -118,7 +118,9 @@ on damage:
 	if victim is wearing iron chestplate named "Thor's Chestplate" && attacker is entity:
 		loop all entities in radius 10 around location of victim:
 			damage loop-entity by 1 heart
-		send "hi" to victim 
+			drawArc particle "redstone", RGB 255, 255, 0, center location of victim ~ vector(0, 1, 0), target location of loop-entity ~ vector(0, 1, 0), id {_id}, rainbowMode false, density 25, height 0, pitchMultiplier 4, visibleRange 30
+		send "hi" to victim
+
 	
 	
 	#if attacker is a player:
