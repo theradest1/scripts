@@ -135,6 +135,10 @@ on damage:
 			stop
 		else:
 			kill victim
+
+	#set damage to damage / {damage.victim.resistance}
+
+
 	if final damage >= health of victim:
 		loop all players:
 			if {mobs.enemy.%{loop-value}%::*} contains victim:

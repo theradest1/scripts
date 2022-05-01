@@ -19,16 +19,17 @@ on leftclick with iron sword:
 
 
 On player armor changed:
-	set {damage.player.resistance} to 0
+	#set {damage.player.resistance} to 0
+
 	if player is wearing iron boots with name "Speed Boots":
 		apply swiftness 2 to player for 999 days
 	else:
 		remove swiftness from player
 	if player is wearing iron helmet with name "Thor's Helmet":
 		set the maximum health of the player to 100
-		add 5 to {damage.player.resistance}
+		#add 5 to {damage.player.resistance}
 	else:
-		set the maximum health player to 10
+		set the maximum health of the player to 10
 
 			
 
