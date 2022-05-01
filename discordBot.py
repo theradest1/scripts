@@ -34,8 +34,7 @@ async def server(ctx, arg):
     except ConnectionRefusedError:
         await ctx.send("The server is not up at the moment, but is starting up now (:")
 		start_server(ctx)
-
-
+		
 @bot.command()
 async def git(ctx, arg):
     global mcserver
