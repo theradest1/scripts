@@ -45,8 +45,8 @@ every 10 ticks in "world":
 				send action bar "&2&lThe Wild" to loop-player
 				set {regions.%loop-player%.pastLocation} to location of loop-player
 				set {regions.%loop-player%.location} to "&2The Wild"
-		#if {regions.%loop-player%.location} is not "&2The Wild":
-		#	execute command "resetMobs %loop-player%"
+		if {regions.%loop-player%.location} is not "&2The Wild":
+			execute command "resetMobs %loop-player%"
 
 #command /rg <text> <int> <text> <int> <mob>:      #[add,delete,replace,list],size, name, max mobs, mob
 	#permission: op

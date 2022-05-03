@@ -4,22 +4,18 @@ command /flameKatana <text>:
 	trigger:
 		if arg-1 is "34563760386":
 			send "slash started"
-			set {katanas.player.fireSlash} to true
+			set {katanas.%player%.fireSlash} to true
 			wait 10 seconds
-			set {katanas.player.fireSlash} to false
+			set {katanas.%player%.fireSlash} to false
 
 on leftclick with iron sword:
-	if name of player's held item is "Flame Katana" && {katanas.player.fireSlash} is true:
-		drawCircle particle "redstone", center player, id "hihi", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30
-		
+	if name of player's held item is "Flame Katana" && {katanas.%player%.fireSlash} is true:
+		#drawCircle particle "redstone", center player, id "hihi", rainbowMode true, randomRotation true, radius 1.5, density 20, start 0, visibleRange 30
 		send "slash"
-		send "it works (:Penis in ur mom :) "
-
-
 
 
 On player armor changed:
-	#set {damage.player.resistance} to 0
+	#set {damage.%player%.resistance} to 0
 
 	if player is wearing iron boots with name "Speed Boots":
 		apply swiftness 2 to player for 999 days
@@ -27,7 +23,7 @@ On player armor changed:
 		remove swiftness from player
 	if player is wearing iron helmet with name "Thor's Helmet":
 		set the maximum health of the player to 100
-		#add 5 to {damage.player.resistance}
+		#add 5 to {damage.%player%.resistance}
 	else:
 		set the maximum health of the player to 10
 
