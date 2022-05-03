@@ -1,29 +1,26 @@
-every 1 tick in "world":
+every 1 second in "world":
 	set {_maxDist} to 15
 	loop all players:
-		#send "hi (:" to loop-value
-		if {regions.%loop-value%.location} is "&2The Wild" && size of {mobs.enemy.%{loop-value}%::*} < {mobs.%{loop-value}%.maxMobs} && gamemode of loop-value is survival:
-			set {_loc} to location of loop-value ~ vector(random integer from -{_maxDist} to {_maxDist}, 0, random integer from -{_maxDist} to {_maxDist})	
-			if distance between {_loc} and location of loop-value > 4:
-				if block at {_loc} is air:
-					if block at ({_loc} ~ vector(0, -3, 0)) is not air:
-						summon zombie at {_loc}
-						add last spawned entity to {mobs.enemy.%{loop-value}%::*}
+		if "%{regions.%loop-player%.location}%" is "&2The Wild" && size of {mobs.enemy.%loop-player%::*} < {mobs.%loop-player%.maxMobs} && gamemode of loop-player is survival:
+			set {_loc} to location of loop-player ~ vector(random integer from -{_maxDist} to {_maxDist}, 0, random integer from -{_maxDist} to {_maxDist})	
+			if distance between {_loc} and location of loop-player > 4 && block at {_loc} is air && block at ({_loc} ~ vector(0, -3, 0)) is not air:
+				summon zombie at {_loc}
+				add last spawned entity to {mobs.enemy.%loop-player%::*}
 
 command /resetMobs <player>:
 	permission: op
 	trigger:
-		loop {mobs.enemy.%{arg-1}%::*}:
+		loop {mobs.enemy.%arg-1%::*}:
 			kill loop-value
-		clear {mobs.enemy.%{arg-1}%::*}
+		clear {mobs.enemy.%arg-1%::*}
 
 command /setMaxMobs <player> <integer>:
 	permission: op
 	trigger:
-		set {mobs.%{arg-1}%.maxMobs} to arg-2
+		set {mobs.%arg-1%.maxMobs} to arg-2
 on join:
-	if {mobs.%{loop-value}%.maxMobs} is not set:
-		set {mobs.%{loop-value}%.maxMobs} to 100
+	if {mobs.%player%.maxMobs} is not set:
+		set {mobs.%player%.maxMobs} to 100
 
 on quit:
 	loop {mobs.enemy.%player%::*}:
