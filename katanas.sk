@@ -70,7 +70,7 @@ command /chargeDash <text>:
 					drawArc particle "redstone", RGB 255, 255, 0, center location of player ~ vector(0, 1, 0), target location of loop-entity ~ vector(0, 1, 0), id {_id}, rainbowMode false, density 25, height 0, pitchMultiplier 4, visibleRange 30
 					add {_id} to {_ids::*}
 					teleport player to loop-entity
-					make player damage loop-entity by 5
+					damage loop-entity by 5 hearts
 				wait 1 tick
 			set {_id} to "rightclick.%player%-%random integer from 1 to 100000%"
 			drawArc particle "redstone", RGB 255, 255, 0, center location of player ~ vector(0, 1, 0), target {_loc} ~ vector(0, 1, 0), id {_id}, rainbowMode false, density 25, height 0, pitchMultiplier 4, visibleRange 30

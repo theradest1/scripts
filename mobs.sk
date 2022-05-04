@@ -11,7 +11,7 @@ command /resetMobs <player>:
 	permission: op
 	trigger:
 		loop {mobs.enemy.%arg-1%::*}:
-			kill loop-value
+			delete uuid of loop-value parsed as entity
 		clear {mobs.enemy.%arg-1%::*}
 
 command /setMaxMobs <player> <integer>:

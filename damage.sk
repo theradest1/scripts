@@ -138,11 +138,11 @@ on damage:
 
 	#set damage to damage / {damage.victim.resistance}
 
-
 	if final damage >= health of victim:
 		loop all players:
-			if {mobs.enemy.%loop-value%::*} contains victim:
-				remove victim from {mobs.enemy.%loop-value%::*}
+			if {mobs.enemy.%loop-player%::*} contains victim:
+				remove victim from {mobs.enemy.%loop-player%::*}
+				send "removed %victim% from list" to "ShadowStar18" parsed as player
 	# spawn area effect cloud at victim's location# with nbt "{NoGravity:1b}"#'s location ++ vector(0, 1, 0)      with nbt "{Radius:0.001f,Duration:50,Particle:""block air""}"
 	# add  "{Radius:0.001f,Duration:50,Particle:""block air""}" to nbt of last spawned entity
 	# set display name of last spawned entity to "&c%{_shownDamage} + final damage%"
