@@ -1,0 +1,4 @@
+on rightclick on entity:
+	if name of event-entity is "&6Auction Master":
+		cancel event
+		make player execute command "ah"
