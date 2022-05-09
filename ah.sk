@@ -21,8 +21,6 @@ command /buylist:
 		loop {ah.itemsForSale::*}:
 			send "&l%loop-value% &rselling for &l%{ah.prices::%{_item}%}%" to player
 			add 1 to {_item}
-		loop {ah.prices::*}:
-			send "%loop-value%"
 command /reset_ah: 
 	permission: op
 	permission message: "&4bruh stop"
@@ -39,7 +37,7 @@ command /reset_ah:
 				send "Canceled" to player
 		open last gui for player
 
-#auction house (problems)
+#auction house (problems with buying)
 command /ah:
 	permission: op
 	permission message: "&4You can't do this yet... but soon :D"
@@ -79,23 +77,29 @@ command /buy <int>:
 	permission message: "&4You can't do this yet... but soon :D"
 	trigger:
 		set {_place} to arg-1
-		set {ah.price} to {ah.prices::%{_place}%}
+		set {_price} to {ah.prices::%{_place}%}
+		set {_seller} to {ah.seller::%{_place}%}
+		set {_object} to {ah.itemsForSale::%{_place}%}
 		create a gui with virtual chest inventory with 4 rows named "&6&lAuction House - Buy":
 			make gui 25 with arrow named "&4&lCancel":
 				make player execute command "/auctionHouse browse"
-			make gui 10 with arrow named "&2Seller:" with lore "&6%{ah.seller::%{_place}%}%"
-			make gui 13 with {ah.itemsForSale::%{_place}%}
-			make gui 16 with arrow named "&a&lBuy" with lore "&6$%{ah.prices::%{_place}%}%":
-				if {coins.%player%.coins} >= {ah.prices::%{_place}%}:
-					give player {ah.itemsForSale::%{_place}%}
-					send "&2You bought &6%{ah.itemsForSale::%{_place}%}% &2from &6%{ah.seller::%{_place}%}% &2for &a$%{ah.prices::%{_place}%}%" to player
+			make gui 10 with arrow named "&2Seller:" with lore "&6%{_seller}%"
+			make gui 13 with {_object}
+			make gui 16 with arrow named "&a&lBuy" with lore "&6$%{_price}%":
+				if {coins.%player%.coins} >= {_price}:
+					send "&2You bought &6%{_object}% &2from &6%{_seller}% &2for &a$%{_price}%" to player
+					send "&2You got &a$%{_price}% &2from selling &6%{_object}% &2to &6%player%" to {ah.seller::{_place}}
 					close player's inventory
-					add {ah.prices::%{_place}%} to {coins.%{seller::%{_place}%}%.coins}
-					subtract {ah.prices::%{_place}%} from {coins.%player%.coins}
-					send "&2You got &a$%{ah.prices::%{_place}%}% &2from selling &6%{ah.itemsForSale::%{_place}%}% &2to &6%player%" to {ah.seller::%{_place}%}
-					delete {ah.itemsForSale::%{_place}%}
-					delete {ah.prices::%{_place}%}
-					delete {ah.seller::%{_place}%}
+					
+					#problem with buying is in here most likley
+					give player {_object}
+					add {_price} to {coins.{seller::{_seller}}.coins}
+					#send "%{seller::%{_place}%}% hi"
+					subtract {ah.prices::{_place}} from {coins.%player%.coins}
+					
+					delete {ah.itemsForSale::{_place}}
+					delete {ah.prices::{_place}}
+					delete {ah.seller::{_place}}
 				else:
 					send "&4You need &2%{ah.price} - {coins.%player%.coins}% &4more coins to buy this item"
 		open last gui for player
