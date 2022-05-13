@@ -30,6 +30,7 @@ on damage:
 		set {healing.%victim%.noHurtTimer} to 0
 
 	if attacker is a player:
+		set damage to 0.5
 		if victim is a player:
 			if {regions.%victim%.location} is not "&2The Wild":
 				if gamemode of attacker is survival:

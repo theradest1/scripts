@@ -18,10 +18,10 @@ command /practiceDummy:
 	trigger:
 		summon armor stand at location of player
 		set display name of last spawned entity to "Practice Dummy"
-command /make <player> <text>:
+command /make <player> [<text>]:
 	permission: op
 	trigger:
-		make arg-1 execute command arg-2
+		make the arg-1 say arg-2
 command /special_item <text> [<text>]:
     permission: op
     trigger:
@@ -46,6 +46,8 @@ on tab complete of "/special_item":
 
 
 #stopping crafting and shopkeeper griefing
+on right click with boat:
+	cancel event
 on hunger bar change:
 	cancel event
 on right click on villager:
