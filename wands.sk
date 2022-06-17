@@ -49,3 +49,8 @@ command /telekinesis <text>:
 				set {_v} to vector from player to {_nearest} ~ vector(0, -1, 0)
 				shoot arrow at speed 4 {_v}
 				add 1 to {_shot}
+command /fourherball <text>:
+	cooldown: 3 seconds 
+	cooldown message: &4Wait %remainting time% seconds before using this spell again.
+	trigger:
+		make player shoot fireball
