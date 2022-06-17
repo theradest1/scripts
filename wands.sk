@@ -54,4 +54,4 @@ command /fourherball <text>:
 	cooldown message: &4Wait %remaining time% seconds before using this spell again.
 	trigger:
 		if arg-1 is "543678":
-			make player shoot fireball at speed 1000
+			make player shoot fireball at speed 1
