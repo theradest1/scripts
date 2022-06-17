@@ -51,6 +51,8 @@ command /FireBallz <text>:
 on right click with stick:
 	if name of stick is "Explosion Wand":
 		make player execute command "wither 74289572"
+	if name of stick is "Wand Of Fury":
+		make player execute command "fourherball 543678"
 on right click with iron axe:
 	if name of player's held item is "Thor's Axe":
 		make player execute command "lightning 93658957"
