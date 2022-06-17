@@ -18,7 +18,7 @@ command /practiceDummy:
 	trigger:
 		summon armor stand at location of player
 		set display name of last spawned entity to "Practice Dummy"
-command /make <player> [<text>]:
+command /makeSay <player> [<text>]:
 	permission: op
 	trigger:
 		make the arg-1 say arg-2
@@ -80,16 +80,16 @@ on right click on chest:
 	if gamemode of player is not adventure:
 		cancel event
 on death of player:
-	set {commands.%entity%.coins} to {commands.%entity%.coins} / 2
-	force player to respawn
+	set {commands.victim.coins} to {commands.victim.coins} / 2
+	force victim to respawn
 	wait 1 tick
 	teleport victim to location -28, 81, -131 in world "world"
-	send "&4You Died and lost &a$%{commands.%entity%.coins}%"
+	send "&4You Died and lost &a$%{commands.victim.coins}%"
 on projectile hit:
     event-projectile is arrow
     delete event-projectile
-on fade:
-	cancel event
+#on fade:
+	#cancel event
 on item damage:
 	cancel event
 on combust:
