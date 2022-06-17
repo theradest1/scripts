@@ -51,7 +51,7 @@ command /telekinesis <text>:
 				add 1 to {_shot}
 command /fourherball <text>:
 	cooldown: 3 seconds 
-	cooldown message: &4Wait %remainting time% seconds before using this spell again.
+	cooldown message: &4Wait %remaining time% seconds before using this spell again.
 	trigger:
 		if arg-1 is "543678":
 			make player shoot fireball at speed 1000
