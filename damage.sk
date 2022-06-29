@@ -46,6 +46,8 @@ on damage:
 	if {sword.%attacker%.trueDamage} is true:
 		stop
 	
+	if name of attacker's held item is "&ePosiden's Trident"
+		set damage to 100
 	if name of attacker's held item is "&bThe Cheese Fork":
 		set damage to 100
 	if name of attacker's held item is "Undead Sword":
