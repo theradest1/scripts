@@ -46,7 +46,8 @@ on damage:
 	if {sword.%attacker%.trueDamage} is true:
 		stop
 	
-	
+	if name of attacker's held item is "The Cheese Fork":
+		set damage to 100
 	if name of attacker's held item is "Undead Sword":
 		set damage to 7
 		apply ambient wither of tier 5 to victim for 5 seconds
